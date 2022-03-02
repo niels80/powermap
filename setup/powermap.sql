@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 03. Feb 2022 um 12:53
+-- Erstellungszeit: 02. Mrz 2022 um 22:22
 -- Server-Version: 10.4.22-MariaDB
 -- PHP-Version: 8.1.2
 
@@ -158,6 +158,290 @@ CREATE TABLE `market_roles` (
 -- --------------------------------------------------------
 
 --
+-- Stellvertreter-Struktur des Views `marktstr_data`
+-- (Siehe unten für die tatsächliche Ansicht)
+--
+CREATE TABLE `marktstr_data` (
+`id_Marktstr` varchar(50)
+,`NAME` varchar(200)
+,`NAME2` varchar(100)
+,`POWER_NETTO` decimal(15,3)
+,`WEIC` varchar(50)
+,`LATITUDE` decimal(12,7)
+,`LONGITUDE` decimal(12,7)
+,`ID_PRIMARY_ENERGY` int(11)
+,`PRIMARY_ENERGY` varchar(500)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `power_units_biomass`
+--
+
+CREATE TABLE `power_units_biomass` (
+  `id_mastr_unit` varchar(50) NOT NULL,
+  `ts_last_update` timestamp NULL DEFAULT NULL,
+  `id_mastr_market_location` varchar(50) DEFAULT NULL,
+  `id_control_status` int(11) DEFAULT NULL,
+  `ts_last_control` date DEFAULT NULL,
+  `id_mastr_operator` varchar(50) DEFAULT NULL,
+  `id_country` int(11) DEFAULT NULL,
+  `id_state` int(11) DEFAULT NULL,
+  `region` varchar(100) DEFAULT NULL,
+  `municipality` varchar(100) DEFAULT NULL,
+  `id_municipality` varchar(50) DEFAULT NULL,
+  `zipcode` varchar(10) DEFAULT NULL,
+  `communal_district` varchar(100) DEFAULT NULL,
+  `id_land_parcel` varchar(50) DEFAULT NULL,
+  `street` varchar(100) DEFAULT NULL,
+  `no_street` tinyint(4) DEFAULT NULL,
+  `street_nr` varchar(10) DEFAULT NULL,
+  `no_street_nr` tinyint(4) DEFAULT NULL,
+  `street_not_found` tinyint(4) DEFAULT NULL,
+  `address_extra` int(11) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `longitude` decimal(12,7) DEFAULT NULL,
+  `latitude` decimal(12,7) DEFAULT NULL,
+  `date_register` date DEFAULT NULL,
+  `date_commissioning_planned` date DEFAULT NULL,
+  `date_commissioning` date DEFAULT NULL,
+  `date_final_decommissioning` date DEFAULT NULL,
+  `date_temp_decommissioning` date DEFAULT NULL,
+  `date_restart_operation` int(11) DEFAULT NULL,
+  `id_status_system` int(11) DEFAULT NULL,
+  `id_status_operation` int(11) DEFAULT NULL,
+  `id_mastr_legacy` varchar(50) DEFAULT NULL,
+  `not_in_migrated_units` tinyint(4) DEFAULT NULL,
+  `id_mastr_last_operator` varchar(50) DEFAULT NULL,
+  `date_operator_change` date DEFAULT NULL,
+  `date_operator_change_register` date DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `weic` varchar(50) DEFAULT NULL,
+  `no_weic` tinyint(4) DEFAULT NULL,
+  `weic_display_name` varchar(100) DEFAULT NULL,
+  `id_bnetza_nr` varchar(50) DEFAULT NULL,
+  `no_bnetza_nr` tinyint(4) DEFAULT NULL,
+  `id_primary_energy` int(11) DEFAULT NULL,
+  `power_brutto` decimal(15,3) DEFAULT NULL,
+  `power_netto` decimal(15,3) DEFAULT NULL,
+  `is_connected_high_voltage` tinyint(4) DEFAULT NULL,
+  `is_blackstart_ready` tinyint(4) DEFAULT NULL,
+  `is_island_operation_ready` tinyint(4) DEFAULT NULL,
+  `id_market_partner` varchar(50) DEFAULT NULL,
+  `remote_control_grid_operator` tinyint(4) DEFAULT NULL,
+  `remote_control_direct_marketer` tinyint(4) DEFAULT NULL,
+  `remote_control_third_party` tinyint(4) DEFAULT NULL,
+  `id_infeed_type` int(11) DEFAULT NULL,
+  `prequalified_balancing` tinyint(4) DEFAULT NULL,
+  `id_mastr_approval` varchar(50) DEFAULT NULL,
+  `id_primary_fuel` int(11) DEFAULT NULL,
+  `id_biomass_type` int(11) DEFAULT NULL,
+  `id_technology` int(11) DEFAULT NULL,
+  `id_mastr_eeg` varchar(50) DEFAULT NULL,
+  `id_mastr_kwk` varchar(50) DEFAULT NULL,
+  `id_H3` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `power_units_consumer`
+--
+
+CREATE TABLE `power_units_consumer` (
+  `id_mastr_unit` varchar(50) NOT NULL,
+  `ts_last_update` timestamp NULL DEFAULT NULL,
+  `id_mastr_market_location` varchar(50) DEFAULT NULL,
+  `id_control_status` int(11) DEFAULT NULL,
+  `ts_last_control` date DEFAULT NULL,
+  `id_mastr_operator` varchar(50) DEFAULT NULL,
+  `id_country` int(11) DEFAULT NULL,
+  `id_state` int(11) DEFAULT NULL,
+  `region` varchar(100) DEFAULT NULL,
+  `municipality` varchar(100) DEFAULT NULL,
+  `id_municipality` varchar(50) DEFAULT NULL,
+  `zipcode` varchar(10) DEFAULT NULL,
+  `communal_district` varchar(100) DEFAULT NULL,
+  `id_land_parcel` varchar(50) DEFAULT NULL,
+  `street` varchar(100) DEFAULT NULL,
+  `no_street` tinyint(4) DEFAULT NULL,
+  `street_nr` varchar(10) DEFAULT NULL,
+  `no_street_nr` tinyint(4) DEFAULT NULL,
+  `street_not_found` tinyint(4) DEFAULT NULL,
+  `address_extra` int(11) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `longitude` decimal(12,7) DEFAULT NULL,
+  `latitude` decimal(12,7) DEFAULT NULL,
+  `date_register` date DEFAULT NULL,
+  `date_commissioning_planned` date DEFAULT NULL,
+  `date_commissioning` date DEFAULT NULL,
+  `date_final_decommissioning` date DEFAULT NULL,
+  `date_temp_decommissioning` date DEFAULT NULL,
+  `date_restart_operation` int(11) DEFAULT NULL,
+  `id_status_system` int(11) DEFAULT NULL,
+  `id_status_operation` int(11) DEFAULT NULL,
+  `id_mastr_legacy` varchar(50) DEFAULT NULL,
+  `not_in_migrated_units` tinyint(4) DEFAULT NULL,
+  `id_mastr_last_operator` varchar(50) DEFAULT NULL,
+  `date_operator_change` date DEFAULT NULL,
+  `date_operator_change_register` date DEFAULT NULL,
+  `id_market_partner` varchar(50) DEFAULT NULL,
+  `date_operation_start` date DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `nr_units_above_50mw` int(11) DEFAULT NULL,
+  `prequalified_ablav` tinyint(4) DEFAULT NULL,
+  `controllable_load` decimal(12,7) DEFAULT NULL,
+  `id_type_controllable` int(11) DEFAULT NULL,
+  `id_H3` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `power_units_geo_soltherm_other`
+--
+
+CREATE TABLE `power_units_geo_soltherm_other` (
+  `id_mastr_unit` varchar(50) NOT NULL,
+  `ts_last_update` timestamp NULL DEFAULT NULL,
+  `id_mastr_market_location` varchar(50) DEFAULT NULL,
+  `id_control_status` int(11) DEFAULT NULL,
+  `ts_last_control` date DEFAULT NULL,
+  `id_mastr_operator` varchar(50) DEFAULT NULL,
+  `id_country` int(11) DEFAULT NULL,
+  `id_state` int(11) DEFAULT NULL,
+  `region` varchar(100) DEFAULT NULL,
+  `municipality` varchar(100) DEFAULT NULL,
+  `id_municipality` varchar(50) DEFAULT NULL,
+  `zipcode` varchar(10) DEFAULT NULL,
+  `communal_district` varchar(100) DEFAULT NULL,
+  `id_land_parcel` varchar(50) DEFAULT NULL,
+  `street` varchar(100) DEFAULT NULL,
+  `no_street` tinyint(4) DEFAULT NULL,
+  `street_nr` varchar(10) DEFAULT NULL,
+  `no_street_nr` tinyint(4) DEFAULT NULL,
+  `street_not_found` tinyint(4) DEFAULT NULL,
+  `address_extra` int(11) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `longitude` decimal(12,7) DEFAULT NULL,
+  `latitude` decimal(12,7) DEFAULT NULL,
+  `date_register` date DEFAULT NULL,
+  `date_commissioning_planned` date DEFAULT NULL,
+  `date_commissioning` date DEFAULT NULL,
+  `date_final_decommissioning` date DEFAULT NULL,
+  `date_temp_decommissioning` date DEFAULT NULL,
+  `date_restart_operation` int(11) DEFAULT NULL,
+  `id_status_system` int(11) DEFAULT NULL,
+  `id_status_operation` int(11) DEFAULT NULL,
+  `id_mastr_legacy` varchar(50) DEFAULT NULL,
+  `not_in_migrated_units` tinyint(4) DEFAULT NULL,
+  `id_mastr_last_operator` varchar(50) DEFAULT NULL,
+  `date_operator_change` date DEFAULT NULL,
+  `date_operator_change_register` date DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `weic` varchar(50) DEFAULT NULL,
+  `no_weic` tinyint(4) DEFAULT NULL,
+  `weic_display_name` varchar(100) DEFAULT NULL,
+  `id_bnetza_nr` varchar(50) DEFAULT NULL,
+  `no_bnetza_nr` tinyint(4) DEFAULT NULL,
+  `id_primary_energy` int(11) DEFAULT NULL,
+  `power_brutto` decimal(15,3) DEFAULT NULL,
+  `power_netto` decimal(15,3) DEFAULT NULL,
+  `is_connected_high_voltage` tinyint(4) DEFAULT NULL,
+  `is_blackstart_ready` tinyint(4) DEFAULT NULL,
+  `is_island_operation_ready` tinyint(4) DEFAULT NULL,
+  `id_market_partner` varchar(50) DEFAULT NULL,
+  `remote_control_grid_operator` tinyint(4) DEFAULT NULL,
+  `remote_control_direct_marketer` tinyint(4) DEFAULT NULL,
+  `remote_control_third_party` tinyint(4) DEFAULT NULL,
+  `id_infeed_type` int(11) DEFAULT NULL,
+  `prequalified_balancing` tinyint(4) DEFAULT NULL,
+  `id_mastr_approval` varchar(50) DEFAULT NULL,
+  `id_technology` varchar(50) DEFAULT NULL,
+  `id_mastr_eeg` varchar(50) DEFAULT NULL,
+  `id_mastr_kwk` varchar(50) DEFAULT NULL,
+  `id_H3` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `power_units_hydro`
+--
+
+CREATE TABLE `power_units_hydro` (
+  `id_mastr_unit` varchar(50) NOT NULL,
+  `ts_last_update` timestamp NULL DEFAULT NULL,
+  `id_mastr_market_location` varchar(50) DEFAULT NULL,
+  `id_control_status` int(11) DEFAULT NULL,
+  `ts_last_control` date DEFAULT NULL,
+  `id_mastr_operator` varchar(50) DEFAULT NULL,
+  `id_country` int(11) DEFAULT NULL,
+  `id_state` int(11) DEFAULT NULL,
+  `region` varchar(100) DEFAULT NULL,
+  `municipality` varchar(100) DEFAULT NULL,
+  `id_municipality` varchar(50) DEFAULT NULL,
+  `zipcode` varchar(10) DEFAULT NULL,
+  `communal_district` varchar(100) DEFAULT NULL,
+  `id_land_parcel` varchar(50) DEFAULT NULL,
+  `street` varchar(100) DEFAULT NULL,
+  `no_street` tinyint(4) DEFAULT NULL,
+  `street_nr` varchar(10) DEFAULT NULL,
+  `no_street_nr` tinyint(4) DEFAULT NULL,
+  `street_not_found` tinyint(4) DEFAULT NULL,
+  `address_extra` int(11) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `longitude` decimal(12,7) DEFAULT NULL,
+  `latitude` decimal(12,7) DEFAULT NULL,
+  `date_register` date DEFAULT NULL,
+  `date_commissioning_planned` date DEFAULT NULL,
+  `date_commissioning` date DEFAULT NULL,
+  `date_final_decommissioning` date DEFAULT NULL,
+  `date_temp_decommissioning` date DEFAULT NULL,
+  `date_restart_operation` int(11) DEFAULT NULL,
+  `has_restrictions` tinyint(4) DEFAULT NULL,
+  `is_border_power_plant` tinyint(4) DEFAULT NULL,
+  `power_netto_max_germany` decimal(15,3) DEFAULT NULL,
+  `id_status_system` int(11) DEFAULT NULL,
+  `id_status_operation` int(11) DEFAULT NULL,
+  `id_mastr_legacy` varchar(50) DEFAULT NULL,
+  `not_in_migrated_units` tinyint(4) DEFAULT NULL,
+  `id_mastr_last_operator` varchar(50) DEFAULT NULL,
+  `date_operator_change` date DEFAULT NULL,
+  `date_operator_change_register` date DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `weic` varchar(50) DEFAULT NULL,
+  `no_weic` tinyint(4) DEFAULT NULL,
+  `weic_display_name` varchar(100) DEFAULT NULL,
+  `id_bnetza_nr` varchar(50) DEFAULT NULL,
+  `no_bnetza_nr` tinyint(4) DEFAULT NULL,
+  `id_primary_energy` int(11) DEFAULT NULL,
+  `power_brutto` decimal(15,3) DEFAULT NULL,
+  `power_netto` decimal(15,3) DEFAULT NULL,
+  `is_connected_high_voltage` tinyint(4) DEFAULT NULL,
+  `is_blackstart_ready` tinyint(4) DEFAULT NULL,
+  `is_island_operation_ready` tinyint(4) DEFAULT NULL,
+  `id_market_partner` varchar(50) DEFAULT NULL,
+  `remote_control_grid_operator` tinyint(4) DEFAULT NULL,
+  `remote_control_direct_marketer` tinyint(4) DEFAULT NULL,
+  `remote_control_third_party` tinyint(4) DEFAULT NULL,
+  `id_infeed_type` int(11) DEFAULT NULL,
+  `prequalified_balancing` tinyint(4) DEFAULT NULL,
+  `id_mastr_approval` varchar(50) DEFAULT NULL,
+  `name_power_plant` varchar(100) DEFAULT NULL,
+  `id_hydro_type` varchar(50) DEFAULT NULL,
+  `id_hydro_source` int(11) DEFAULT NULL,
+  `id_mastr_eeg` varchar(50) DEFAULT NULL,
+  `has_reported_operation_end` tinyint(4) DEFAULT NULL,
+  `id_operation_end` int(11) DEFAULT NULL,
+  `date_end_operation` date DEFAULT NULL,
+  `id_H3` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `power_units_nuclear`
 --
 
@@ -219,7 +503,8 @@ CREATE TABLE `power_units_nuclear` (
   `id_mastr_approval` varchar(50) DEFAULT NULL,
   `name_power_plant` varchar(100) DEFAULT NULL,
   `name_power_unit` varchar(100) DEFAULT NULL,
-  `id_technology` int(11) DEFAULT NULL
+  `id_technology` int(11) DEFAULT NULL,
+  `id_H3` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -298,7 +583,87 @@ CREATE TABLE `power_units_solar` (
   `id_area_type` varchar(100) DEFAULT NULL,
   `area_used_agriculture` decimal(15,3) DEFAULT NULL,
   `id_usage_of_location` int(11) DEFAULT NULL,
-  `id_mastr_eeg` varchar(50) DEFAULT NULL
+  `id_mastr_eeg` varchar(50) DEFAULT NULL,
+  `id_H3` varchar(15) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `power_units_storage`
+--
+
+CREATE TABLE `power_units_storage` (
+  `id_mastr_unit` varchar(50) NOT NULL,
+  `ts_last_update` timestamp NULL DEFAULT NULL,
+  `id_mastr_market_location` varchar(50) DEFAULT NULL,
+  `id_control_status` int(11) DEFAULT NULL,
+  `ts_last_control` date DEFAULT NULL,
+  `id_mastr_operator` varchar(50) DEFAULT NULL,
+  `id_country` int(11) DEFAULT NULL,
+  `id_state` int(11) DEFAULT NULL,
+  `region` varchar(100) DEFAULT NULL,
+  `municipality` varchar(100) DEFAULT NULL,
+  `id_municipality` varchar(50) DEFAULT NULL,
+  `zipcode` varchar(10) DEFAULT NULL,
+  `communal_district` varchar(100) DEFAULT NULL,
+  `id_land_parcel` varchar(50) DEFAULT NULL,
+  `street` varchar(100) DEFAULT NULL,
+  `no_street` tinyint(4) DEFAULT NULL,
+  `street_nr` varchar(10) DEFAULT NULL,
+  `no_street_nr` tinyint(4) DEFAULT NULL,
+  `street_not_found` tinyint(4) DEFAULT NULL,
+  `address_extra` int(11) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `longitude` decimal(12,7) DEFAULT NULL,
+  `latitude` decimal(12,7) DEFAULT NULL,
+  `date_register` date DEFAULT NULL,
+  `date_commissioning_planned` date DEFAULT NULL,
+  `date_commissioning` date DEFAULT NULL,
+  `date_final_decommissioning` date DEFAULT NULL,
+  `date_temp_decommissioning` date DEFAULT NULL,
+  `date_restart_operation` int(11) DEFAULT NULL,
+  `id_status_system` int(11) DEFAULT NULL,
+  `id_status_operation` int(11) DEFAULT NULL,
+  `id_mastr_legacy` varchar(50) DEFAULT NULL,
+  `not_in_migrated_units` tinyint(4) DEFAULT NULL,
+  `id_mastr_last_operator` varchar(50) DEFAULT NULL,
+  `date_operator_change` date DEFAULT NULL,
+  `date_operator_change_register` date DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `weic` varchar(50) DEFAULT NULL,
+  `no_weic` tinyint(4) DEFAULT NULL,
+  `weic_display_name` varchar(100) DEFAULT NULL,
+  `id_bnetza_nr` varchar(50) DEFAULT NULL,
+  `no_bnetza_nr` tinyint(4) DEFAULT NULL,
+  `id_primary_energy` int(11) DEFAULT NULL,
+  `power_brutto` decimal(15,3) DEFAULT NULL,
+  `power_netto` decimal(15,3) DEFAULT NULL,
+  `is_connected_high_voltage` tinyint(4) DEFAULT NULL,
+  `is_blackstart_ready` tinyint(4) DEFAULT NULL,
+  `is_island_operation_ready` tinyint(4) DEFAULT NULL,
+  `id_market_partner` varchar(50) DEFAULT NULL,
+  `remote_control_grid_operator` tinyint(4) DEFAULT NULL,
+  `remote_control_direct_marketer` tinyint(4) DEFAULT NULL,
+  `remote_control_third_party` tinyint(4) DEFAULT NULL,
+  `id_infeed_type` int(11) DEFAULT NULL,
+  `prequalified_balancing` tinyint(4) DEFAULT NULL,
+  `id_mastr_approval` varchar(50) DEFAULT NULL,
+  `id_location_type` int(11) DEFAULT NULL,
+  `id_ac_dc_connection` int(11) DEFAULT NULL,
+  `id_battery_technology` int(11) DEFAULT NULL,
+  `power_netto_pumping` decimal(15,3) DEFAULT NULL,
+  `is_linear_controllable` tinyint(4) DEFAULT NULL,
+  `id_pump_storage_technology` int(11) DEFAULT NULL,
+  `is_backup_power` tinyint(4) DEFAULT NULL,
+  `is_border_power_plant` tinyint(4) DEFAULT NULL,
+  `power_netto_max_germany` decimal(15,3) DEFAULT NULL,
+  `power_converter` decimal(15,3) DEFAULT NULL,
+  `id_mastr_storage` varchar(50) DEFAULT NULL,
+  `id_mastr_eeg` varchar(50) DEFAULT NULL,
+  `id_eeg_type` int(11) DEFAULT NULL,
+  `id_technology` varchar(50) DEFAULT NULL,
+  `id_H3` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -382,7 +747,8 @@ CREATE TABLE `power_units_thermal` (
   `contracted_consumers` varchar(500) DEFAULT NULL,
   `is_backup_power` tinyint(4) DEFAULT NULL,
   `id_location_backup_power` int(11) DEFAULT NULL,
-  `id_mastr_kwk` varchar(50) DEFAULT NULL
+  `id_mastr_kwk` varchar(50) DEFAULT NULL,
+  `id_H3` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -466,8 +832,48 @@ CREATE TABLE `power_units_wind` (
   `has_restrictions_other` tinyint(4) DEFAULT NULL,
   `water_depth` decimal(15,3) DEFAULT NULL,
   `distance_to_shore` decimal(15,3) DEFAULT NULL,
-  `id_mastr_eeg` varchar(50) DEFAULT NULL
+  `id_mastr_eeg` varchar(50) DEFAULT NULL,
+  `id_H3` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Stellvertreter-Struktur des Views `view_all_units`
+-- (Siehe unten für die tatsächliche Ansicht)
+--
+CREATE TABLE `view_all_units` (
+`P_TYPE` varchar(12)
+,`TABLENAME` varchar(30)
+,`NAME` varchar(200)
+,`POWER_NETTO` decimal(19,7)
+,`ID_MASTR_UNIT` varchar(50)
+,`WEIC` varchar(50)
+,`LATITUDE` decimal(12,7)
+,`LONGITUDE` decimal(12,7)
+,`id_H3` varchar(15)
+,`ZIPCODE` varchar(10)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stellvertreter-Struktur des Views `view_all_units_location`
+-- (Siehe unten für die tatsächliche Ansicht)
+--
+CREATE TABLE `view_all_units_location` (
+`P_TYPE` varchar(12)
+,`TABLENAME` varchar(30)
+,`NAME` varchar(200)
+,`zip_name` varchar(84)
+,`POWER_NETTO` decimal(19,7)
+,`ID_MASTR_UNIT` varchar(50)
+,`WEIC` varchar(50)
+,`id_H3` varchar(15)
+,`zipcode` varchar(10)
+,`LAT` decimal(16,7)
+,`LON` decimal(16,7)
+);
 
 -- --------------------------------------------------------
 
@@ -483,6 +889,33 @@ CREATE TABLE `zip_codes` (
   `lat` decimal(15,6) DEFAULT NULL,
   `lon` decimal(15,6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur des Views `marktstr_data`
+--
+DROP TABLE IF EXISTS `marktstr_data`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `marktstr_data`  AS SELECT `power_units_nuclear`.`id_mastr_unit` AS `id_Marktstr`, `power_units_nuclear`.`name` AS `NAME`, `power_units_nuclear`.`name_power_plant` AS `NAME2`, `power_units_nuclear`.`power_netto` AS `POWER_NETTO`, `power_units_nuclear`.`weic` AS `WEIC`, `power_units_nuclear`.`latitude` AS `LATITUDE`, `power_units_nuclear`.`longitude` AS `LONGITUDE`, `power_units_nuclear`.`id_primary_energy` AS `ID_PRIMARY_ENERGY`, `pe`.`name_DE` AS `PRIMARY_ENERGY` FROM (`power_units_nuclear` join `catalog` `pe`) WHERE `power_units_nuclear`.`weic` is not null AND `power_units_nuclear`.`id_primary_energy` = `pe`.`id` ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur des Views `view_all_units`
+--
+DROP TABLE IF EXISTS `view_all_units`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_all_units`  AS SELECT 'PU_NUCLEAR' AS `P_TYPE`, 'power_units_nuclear' AS `TABLENAME`, `power_units_nuclear`.`name` AS `NAME`, `power_units_nuclear`.`power_netto` AS `POWER_NETTO`, `power_units_nuclear`.`id_mastr_unit` AS `ID_MASTR_UNIT`, `power_units_nuclear`.`weic` AS `WEIC`, `power_units_nuclear`.`latitude` AS `LATITUDE`, `power_units_nuclear`.`longitude` AS `LONGITUDE`, `power_units_nuclear`.`id_H3` AS `id_H3`, `power_units_nuclear`.`zipcode` AS `ZIPCODE` FROM `power_units_nuclear` ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur des Views `view_all_units_location`
+--
+DROP TABLE IF EXISTS `view_all_units_location`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_all_units_location`  AS SELECT `units`.`P_TYPE` AS `P_TYPE`, `units`.`TABLENAME` AS `TABLENAME`, `units`.`NAME` AS `NAME`, `zip_codes`.`name` AS `zip_name`, `units`.`POWER_NETTO` AS `POWER_NETTO`, `units`.`ID_MASTR_UNIT` AS `ID_MASTR_UNIT`, `units`.`WEIC` AS `WEIC`, `units`.`id_H3` AS `id_H3`, `units`.`ZIPCODE` AS `zipcode`, coalesce(`units`.`LATITUDE`,`zip_codes`.`lat`) AS `LAT`, coalesce(`units`.`LONGITUDE`,`zip_codes`.`lon`) AS `LON` FROM (`view_all_units` `units` left join `zip_codes` on(`units`.`ZIPCODE` = `zip_codes`.`plz`)) ORDER BY `units`.`ZIPCODE` ASC ;
 
 --
 -- Indizes der exportierten Tabellen
@@ -519,28 +952,67 @@ ALTER TABLE `market_roles`
   ADD PRIMARY KEY (`id_mastr_role`);
 
 --
+-- Indizes für die Tabelle `power_units_biomass`
+--
+ALTER TABLE `power_units_biomass`
+  ADD PRIMARY KEY (`id_mastr_unit`),
+  ADD KEY `biomass_H3` (`id_H3`);
+
+--
+-- Indizes für die Tabelle `power_units_consumer`
+--
+ALTER TABLE `power_units_consumer`
+  ADD PRIMARY KEY (`id_mastr_unit`),
+  ADD KEY `id_H3` (`id_H3`);
+
+--
+-- Indizes für die Tabelle `power_units_geo_soltherm_other`
+--
+ALTER TABLE `power_units_geo_soltherm_other`
+  ADD PRIMARY KEY (`id_mastr_unit`),
+  ADD KEY `geo_H3` (`id_H3`);
+
+--
+-- Indizes für die Tabelle `power_units_hydro`
+--
+ALTER TABLE `power_units_hydro`
+  ADD PRIMARY KEY (`id_mastr_unit`),
+  ADD KEY `hydro_H3` (`id_H3`);
+
+--
 -- Indizes für die Tabelle `power_units_nuclear`
 --
 ALTER TABLE `power_units_nuclear`
-  ADD PRIMARY KEY (`id_mastr_unit`);
+  ADD PRIMARY KEY (`id_mastr_unit`),
+  ADD KEY `index_h3_nuclear` (`id_H3`);
 
 --
 -- Indizes für die Tabelle `power_units_solar`
 --
 ALTER TABLE `power_units_solar`
-  ADD PRIMARY KEY (`id_mastr_unit`);
+  ADD PRIMARY KEY (`id_mastr_unit`),
+  ADD KEY `index_h3_solar` (`id_H3`);
+
+--
+-- Indizes für die Tabelle `power_units_storage`
+--
+ALTER TABLE `power_units_storage`
+  ADD PRIMARY KEY (`id_mastr_unit`),
+  ADD KEY `storage_H3` (`id_H3`);
 
 --
 -- Indizes für die Tabelle `power_units_thermal`
 --
 ALTER TABLE `power_units_thermal`
-  ADD PRIMARY KEY (`id_mastr_unit`);
+  ADD PRIMARY KEY (`id_mastr_unit`),
+  ADD KEY `index_h3_thermal` (`id_H3`);
 
 --
 -- Indizes für die Tabelle `power_units_wind`
 --
 ALTER TABLE `power_units_wind`
-  ADD PRIMARY KEY (`id_mastr_unit`);
+  ADD PRIMARY KEY (`id_mastr_unit`),
+  ADD KEY `index_h3_wind` (`id_H3`);
 
 --
 -- Indizes für die Tabelle `zip_codes`

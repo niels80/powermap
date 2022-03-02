@@ -23,10 +23,38 @@ BASE_DIR = 'E:\Temp\markststammdatenregister'
 #         print ('Importing '+file)
 #         import_market_player.import_market_player(file)
 
+# Units Consumer
+import_units.truncate_units_consumer()
+import_units.import_units_consumer(BASE_DIR+'\EinheitenStromVerbraucher.xml')
+
+
+# Units Storage
+import_units.truncate_units_storage()
+for i in range(100):
+     file = BASE_DIR+'\EinheitenStromSpeicher_'+str(i)+'.xml'
+     if (os.path.isfile(file)):
+         print ('Importing '+file)
+         import_units.import_units_storage(file)
+
+
+# Units Geothermal and others
+import_units.truncate_units_geothermal_other()
+import_units.import_units_geothermal_other(BASE_DIR+'\EinheitenGeoSolarthermieGrubenKlaerschlammDruckentspannung.xml')
+
+
+# Units Hydro
+import_units.truncate_units_hydro()
+import_units.import_units_hydro(BASE_DIR+'\EinheitenWasser.xml')
+
+# Units Biomass
+import_units.truncate_units_biomass()
+import_units.import_units_biomass(BASE_DIR+'\EinheitenBiomasse.xml')
+exit(0)
+
 # Units Thermal
 import_units.truncate_units_thermal()
 import_units.import_units_thermal(BASE_DIR+'\EinheitenVerbrennung.xml')
-exit(0)
+
 
 #  Units Nuclear
 import_units.truncate_units_nuclear()

@@ -70,7 +70,9 @@ dict_all_units = {
     "GenMastrNummer" : "id_mastr_approval",
     "NameKraftwerk" : "name_power_plant",
     "NameKraftwerksblock" : "name_power_unit",
-    "Technologie" : "id_technology"
+    "Technologie" : "id_technology",
+    "EegMaStRNummer": "id_mastr_eeg",
+    "KwkMaStRNummer": "id_mastr_kwk"
 }
 
 dict_solar = {
@@ -87,8 +89,7 @@ dict_solar = {
     "InAnspruchGenommeneFlaeche" : "area_used",
     "ArtDerFlaecheIds" : "id_area_type",
     "InAnspruchGenommeneAckerflaeche" : "area_used_agriculture",
-    "Nutzungsbereich" : "id_usage_of_location",
-    "EegMaStRNummer" : "id_mastr_eeg"
+    "Nutzungsbereich" : "id_usage_of_location"
 }
 
 dict_thermal = {
@@ -109,7 +110,6 @@ dict_thermal = {
     "AnteiligNutzungsberechtigte" : "contracted_consumers",
     "Notstromaggregat" : "is_backup_power",
     "Einsatzort" : "id_location_backup_power",
-    "KwkMaStRNummer" : "id_mastr_kwk"
 }
 
 dict_wind = {
@@ -133,8 +133,58 @@ dict_wind = {
     "AuflagenAbschaltungSonstige" :  "has_restrictions_other",
     "Wassertiefe" :  "water_depth" ,
     "Kuestenentfernung" :  "distance_to_shore" ,
-    "EegMaStRNummer" : "id_mastr_eeg"
+
 }
+
+dict_biomass = {
+    "KwkMaStRNummer" : "id_mastr_kwk",
+    "Hauptbrennstoff" : "id_primary_fuel",
+    "Biomasseart"     : "id_biomass_type"
+}
+
+
+dict_hydro = {
+    "ArtDerWasserkraftanlage" : "id_hydro_type",
+    "ArtDesZuflusses" : "id_hydro_source",
+    "MinderungStromerzeugung" : "has_restrictions",
+    "BestandteilGrenzkraftwerk": "is_border_power_plant",
+    "NettonennleistungDeutschland": "power_netto_max_germany",
+    "AnzeigeEinerStilllegung": "has_reported_operation_end",
+    "ArtDerStilllegung": "id_operation_end",
+    "DatumBeginnVorlaeufigenOderEndgueltigenStilllegung": "date_end_operation",
+}
+
+dict_geothermal_other = {
+
+
+}
+
+dict_storage = {
+    "Einsatzort" : "id_location_type",
+    "AcDcKoppelung" : "id_ac_dc_connection",
+    "Batterietechnologie" : "id_battery_technology",
+    "PumpbetriebLeistungsaufnahme" : "power_netto_pumping",
+    "PumpbetriebKontinuierlichRegelbar" : "is_linear_controllable",
+    "Pumpspeichertechnologie"  : "id_pump_storage_technology",
+    "Notstromaggregat" : "is_backup_power",
+    "BestandteilGrenzkraftwerk"  : "is_border_power_plant",
+    "NettonennleistungDeutschland" :  "power_netto_max_germany",
+    "ZugeordnenteWirkleistungWechselrichter" : "power_converter",
+    "SpeMastrNummer" : "id_mastr_storage",
+    "EegAnlagentyp"  :  "id_eeg_type"
+}
+
+dict_consumer = {
+    "NameStromverbrauchseinheit" : "name",
+    "AnzahlStromverbrauchseinheitenGroesser50Mw" : "nr_units_above_50mw",
+    "PraequalifiziertGemaessAblav" : "prequalified_ablav",
+    "AnteilBeinflussbareLast" : "controllable_load",
+    "ArtAbschaltbareLast" : "id_type_controllable"
+}
+
+
+
+
 
 
 ###########################################################################################################
@@ -194,6 +244,78 @@ def truncate_units_thermal():
 def import_units_thermal(filename):
     dict_units = dict_all_units | dict_thermal  # Needs Python 3.9.x   but it's so elegant :-)
     return import_units(filename,"EinheitVerbrennung","power_units_thermal",dict_units)
+
+###########################################################################################################
+#  Biomass units
+###########################################################################################################
+def truncate_units_biomass():
+    sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
+    sql_string = "TRUNCATE TABLE power_units_biomass"
+    sqlCursor = sqlConnection.cursor()
+    sqlCursor.execute(sql_string)
+
+
+def import_units_biomass(filename):
+    dict_units = dict_all_units | dict_biomass  # Needs Python 3.9.x   but it's so elegant :-)
+    return import_units(filename,"EinheitBiomasse","power_units_biomass",dict_units)
+
+###########################################################################################################
+#  Hydro units
+###########################################################################################################
+def truncate_units_hydro():
+    sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
+    sql_string = "TRUNCATE TABLE power_units_hydro"
+    sqlCursor = sqlConnection.cursor()
+    sqlCursor.execute(sql_string)
+
+
+def import_units_hydro(filename):
+    dict_units = dict_all_units | dict_hydro  # Needs Python 3.9.x   but it's so elegant :-)
+    return import_units(filename,"EinheitWasser","power_units_hydro",dict_units)
+
+
+###########################################################################################################
+#  Geothermal and other units
+###########################################################################################################
+def truncate_units_geothermal_other():
+    sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
+    sql_string = "TRUNCATE TABLE power_units_geo_soltherm_other"
+    sqlCursor = sqlConnection.cursor()
+    sqlCursor.execute(sql_string)
+
+
+def import_units_geothermal_other(filename):
+    dict_units = dict_all_units | dict_geothermal_other  # Needs Python 3.9.x   but it's so elegant :-)
+    return import_units(filename,"EinheitGeoSolarthermieGrubenKlaerschlammDruckentspannung","power_units_geo_soltherm_other",dict_units)
+
+###########################################################################################################
+#  Storage units
+###########################################################################################################
+def truncate_units_storage():
+    sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
+    sql_string = "TRUNCATE TABLE power_units_storage"
+    sqlCursor = sqlConnection.cursor()
+    sqlCursor.execute(sql_string)
+
+
+def import_units_storage(filename):
+    dict_units = dict_all_units | dict_storage  # Needs Python 3.9.x   but it's so elegant :-)
+    return import_units(filename,"EinheitStromSpeicher","power_units_storage",dict_units)
+
+###########################################################################################################
+#  Power consumer units
+###########################################################################################################
+def truncate_units_consumer():
+    sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
+    sql_string = "TRUNCATE TABLE power_units_consumer"
+    sqlCursor = sqlConnection.cursor()
+    sqlCursor.execute(sql_string)
+
+
+def import_units_consumer(filename):
+    dict_units = dict_all_units | dict_consumer  # Needs Python 3.9.x   but it's so elegant :-)
+    return import_units(filename,"EinheitStromVerbraucher","power_units_consumer",dict_units)
+
 
 
 ###########################################################################################################

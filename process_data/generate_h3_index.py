@@ -17,6 +17,7 @@ sqlConnection2 = helper.getSqlConnection(os.environ["POWERMAP_DB"])
 sqlCursor2 = sqlConnection2.cursor()
 
 nr = 0;
+nrSQL = 0;
 
 #print("Counting units....")
 #sqlCursor.execute("SELECT COUNT(ID_MASTR_UNIT) FROM view_all_units")
@@ -24,7 +25,7 @@ nr = 0;
 #nrTotal = result[0];
 #print("Number of units: ", nrTotal)
 
-sqlCursor.execute('SELECT ID_MASTR_UNIT, TABLENAME, LAT, LON FROM view_all_units_location ORDER BY TABLENAME, ID_MASTR_UNIT ')
+sqlCursor.execute('SELECT ID_MASTR_UNIT, TABLENAME, LAT, LON FROM view_all_units_location WHERE id_H3 is null ORDER BY TABLENAME, ID_MASTR_UNIT ')
 
 akt_table = "";
 while True:
@@ -36,7 +37,7 @@ while True:
     print("Processing row " + str(nr) + "-" + str(nr + BATCHSIZE))
     for row in results:
         nr += 1;
-
+        nrSQL += 1;
         id_mastr = row[0]
         table    = row[1]
         lat      = row[2]
@@ -53,16 +54,17 @@ while True:
         id_H3 = h3.geo_to_h3(float(row[2]), float(row[3]), RESOLUTION)
         data_update.append([id_H3, id_mastr])
 
-        if (table != akt_table):
+        if (table != akt_table and nrSQL > 0):
             sql = "UPDATE "+akt_table+" SET id_H3 = ? WHERE id_mastr_unit = ? "
             sqlCursor2.executemany(sql, data_update)
             sqlCursor2.commit()
             data_update = []
             akt_table = table
+            nrSQL = 0
 
-
-    sqlCursor2.executemany("UPDATE " + akt_table + " SET id_H3 = ? WHERE id_mastr_unit = ? ", data_update)
-    sqlCursor2.commit()
+    if nrSQL > 0:
+        sqlCursor2.executemany("UPDATE " + akt_table + " SET id_H3 = ? WHERE id_mastr_unit = ? ", data_update)
+        sqlCursor2.commit()
 
 print("Final")
 
