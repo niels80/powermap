@@ -7,21 +7,45 @@ from import_functions import import_units
 
 BASE_DIR = 'E:\Temp\markststammdatenregister'
 
-# catalog.import_categories(BASE_DIR+'\Katalogkategorien.xml')
-# catalog.import_catalog(BASE_DIR+'\Katalogwerte.xml')
-# catalog.import_balancing_areas(BASE_DIR+'\Bilanzierungsgebiete.xml')
+catalog.import_categories(BASE_DIR+'\Katalogkategorien.xml')
+catalog.import_catalog(BASE_DIR+'\Katalogwerte.xml')
+catalog.import_balancing_areas(BASE_DIR+'\Bilanzierungsgebiete.xml')
 #
 # #Market roles
-# import_market_roles.truncate_market_roles()
-# import_market_roles.import_market_roles(BASE_DIR+'\Marktrollen.xml')
+import_market_roles.truncate_market_roles()
+import_market_roles.import_market_roles(BASE_DIR+'\Marktrollen.xml')
 #
 # #Market players
-# import_market_player.truncate_market_player()
-# for i in range(100):
-#     file = BASE_DIR+'\Marktakteure_'+str(i)+'.xml'
-#     if (os.path.isfile(file)):
-#         print ('Importing '+file)
-#         import_market_player.import_market_player(file)
+import_market_player.truncate_market_player()
+for i in range(100):
+    file = BASE_DIR+'\Marktakteure_'+str(i)+'.xml'
+    if (os.path.isfile(file)):
+        print ('Importing '+file)
+        import_market_player.import_market_player(file)
+
+
+
+#########################################################
+# GAS
+#########################################################
+
+# Units Consumer
+import_units.truncate_units_gas_consumer()
+import_units.import_units_gas_consumer(BASE_DIR+'\EinheitenGasverbraucher.xml')
+
+
+# Units Storage
+import_units.truncate_units_gas_storage()
+import_units.import_units_gas_storage(BASE_DIR+'\EinheitenGasSpeicher.xml')
+
+
+# Units Generator
+import_units.truncate_units_gas_generator()
+import_units.import_units_gas_generator(BASE_DIR+'\EinheitenGasErzeuger.xml')
+
+#########################################################
+# Power
+#########################################################
 
 # Units Consumer
 import_units.truncate_units_consumer()
@@ -49,7 +73,6 @@ import_units.import_units_hydro(BASE_DIR+'\EinheitenWasser.xml')
 # Units Biomass
 import_units.truncate_units_biomass()
 import_units.import_units_biomass(BASE_DIR+'\EinheitenBiomasse.xml')
-exit(0)
 
 # Units Thermal
 import_units.truncate_units_thermal()

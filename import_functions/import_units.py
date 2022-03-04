@@ -75,7 +75,7 @@ dict_all_units = {
     "KwkMaStRNummer": "id_mastr_kwk"
 }
 
-dict_solar = {
+dict_power_solar = {
     "ZugeordneteWirkleistungWechselrichter" : "power_converter"	,
     "GemeinsamerWechselrichterMitSpeicher" : "id_converter_storage",
     "AnzahlModule" : "nr_modules" ,
@@ -92,7 +92,7 @@ dict_solar = {
     "Nutzungsbereich" : "id_usage_of_location"
 }
 
-dict_thermal = {
+dict_power_thermal = {
     "DatumBaubeginn" : "date_construction_start",
     "AnzeigeEinerStilllegung" :  "has_reported_operation_end",
     "ArtDerStilllegung" : "id_operation_end",
@@ -112,7 +112,7 @@ dict_thermal = {
     "Einsatzort" : "id_location_backup_power",
 }
 
-dict_wind = {
+dict_power_wind = {
       "NameWindpark" : "name_windpark" ,
     "Lage" : "id_location_type" ,
     "Seelage" :  "id_location_sea" ,
@@ -136,14 +136,14 @@ dict_wind = {
 
 }
 
-dict_biomass = {
+dict_power_biomass = {
     "KwkMaStRNummer" : "id_mastr_kwk",
     "Hauptbrennstoff" : "id_primary_fuel",
     "Biomasseart"     : "id_biomass_type"
 }
 
 
-dict_hydro = {
+dict_power_hydro = {
     "ArtDerWasserkraftanlage" : "id_hydro_type",
     "ArtDesZuflusses" : "id_hydro_source",
     "MinderungStromerzeugung" : "has_restrictions",
@@ -154,12 +154,12 @@ dict_hydro = {
     "DatumBeginnVorlaeufigenOderEndgueltigenStilllegung": "date_end_operation",
 }
 
-dict_geothermal_other = {
+dict_power_geothermal_other = {
 
 
 }
 
-dict_storage = {
+dict_power_storage = {
     "Einsatzort" : "id_location_type",
     "AcDcKoppelung" : "id_ac_dc_connection",
     "Batterietechnologie" : "id_battery_technology",
@@ -174,21 +174,41 @@ dict_storage = {
     "EegAnlagentyp"  :  "id_eeg_type"
 }
 
-dict_consumer = {
+dict_power_consumer = {
     "NameStromverbrauchseinheit" : "name",
     "AnzahlStromverbrauchseinheitenGroesser50Mw" : "nr_units_above_50mw",
     "PraequalifiziertGemaessAblav" : "prequalified_ablav",
     "AnteilBeinflussbareLast" : "controllable_load",
     "ArtAbschaltbareLast" : "id_type_controllable"
+
 }
 
+dict_gas_generator = {
+    "Erzeugungsleistung" : "max_inject_power",
+    "NameGaserzeugungseinheit" : "name",
+    "SpeicherMaStRNummer" : "id_mastr_storage"
+}
 
+dict_gas_storage = {
+    "NameGasspeicher" : "name",
+    "Speicherart" : "id_storage_type",
+    "MaximalNutzbaresArbeitsgasvolumen" : "working_gas_max",
+    "MaximaleEinspeicherleistung" : "max_withdrawal_power" ,  # Withdrawal from the grid - always grid view
+    "MaximaleAusspeicherleistung" : "max_inject_power",       # Inject into the grid
+    "DurchschnittlicherBrennwert" : "caloric_value_avg",
+    "SpeicherMaStRNummer" : "id_mastr_storage",
+    "Weic_Na" : "no_weic"
+}
 
-
-
+dict_gas_consumer = {
+    "NameGasverbrauchsseinheit" : "name",
+    "MaximaleGasbezugsleistung" : "max_withdrawal_power",
+    "EinheitDientDerStromerzeugung" : "is_power_generator",
+    "VerknuepfteEinheitenMaStRNummern" : "id_mastr_connected"
+}
 
 ###########################################################################################################
-#  Nuclear units
+#  Power Nuclear units
 ###########################################################################################################
 def truncate_units_nuclear():
     sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
@@ -203,7 +223,7 @@ def import_units_nuclear(filename):
 
 
 ###########################################################################################################
-#  Solar units
+#  Power Solar units
 ###########################################################################################################
 def truncate_units_solar():
     sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
@@ -213,12 +233,12 @@ def truncate_units_solar():
 
 
 def import_units_solar(filename):
-    dict_units = dict_all_units | dict_solar  # Needs Python 3.9.x   but it's so elegant :-)
+    dict_units = dict_all_units | dict_power_solar  # Needs Python 3.9.x   but it's so elegant :-)
     return import_units(filename,"EinheitSolar","power_units_solar",dict_units)
 
 
 ###########################################################################################################
-#  Wind units
+#  Power Wind units
 ###########################################################################################################
 def truncate_units_wind():
     sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
@@ -228,11 +248,11 @@ def truncate_units_wind():
 
 
 def import_units_wind(filename):
-    dict_units = dict_all_units | dict_wind  # Needs Python 3.9.x   but it's so elegant :-)
+    dict_units = dict_all_units | dict_power_wind  # Needs Python 3.9.x   but it's so elegant :-)
     return import_units(filename,"EinheitWind","power_units_wind",dict_units)
 
 ###########################################################################################################
-#  Thermal units
+#  Power Thermal units
 ###########################################################################################################
 def truncate_units_thermal():
     sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
@@ -242,11 +262,11 @@ def truncate_units_thermal():
 
 
 def import_units_thermal(filename):
-    dict_units = dict_all_units | dict_thermal  # Needs Python 3.9.x   but it's so elegant :-)
+    dict_units = dict_all_units | dict_power_thermal  # Needs Python 3.9.x   but it's so elegant :-)
     return import_units(filename,"EinheitVerbrennung","power_units_thermal",dict_units)
 
 ###########################################################################################################
-#  Biomass units
+#  Power Biomass units
 ###########################################################################################################
 def truncate_units_biomass():
     sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
@@ -256,11 +276,11 @@ def truncate_units_biomass():
 
 
 def import_units_biomass(filename):
-    dict_units = dict_all_units | dict_biomass  # Needs Python 3.9.x   but it's so elegant :-)
+    dict_units = dict_all_units | dict_power_biomass  # Needs Python 3.9.x   but it's so elegant :-)
     return import_units(filename,"EinheitBiomasse","power_units_biomass",dict_units)
 
 ###########################################################################################################
-#  Hydro units
+#  Power Hydro units
 ###########################################################################################################
 def truncate_units_hydro():
     sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
@@ -270,12 +290,12 @@ def truncate_units_hydro():
 
 
 def import_units_hydro(filename):
-    dict_units = dict_all_units | dict_hydro  # Needs Python 3.9.x   but it's so elegant :-)
+    dict_units = dict_all_units | dict_power_hydro  # Needs Python 3.9.x   but it's so elegant :-)
     return import_units(filename,"EinheitWasser","power_units_hydro",dict_units)
 
 
 ###########################################################################################################
-#  Geothermal and other units
+#  Power Geothermal and other units
 ###########################################################################################################
 def truncate_units_geothermal_other():
     sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
@@ -285,11 +305,11 @@ def truncate_units_geothermal_other():
 
 
 def import_units_geothermal_other(filename):
-    dict_units = dict_all_units | dict_geothermal_other  # Needs Python 3.9.x   but it's so elegant :-)
+    dict_units = dict_all_units | dict_power_geothermal_other  # Needs Python 3.9.x   but it's so elegant :-)
     return import_units(filename,"EinheitGeoSolarthermieGrubenKlaerschlammDruckentspannung","power_units_geo_soltherm_other",dict_units)
 
 ###########################################################################################################
-#  Storage units
+#  Power Storage units
 ###########################################################################################################
 def truncate_units_storage():
     sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
@@ -299,7 +319,7 @@ def truncate_units_storage():
 
 
 def import_units_storage(filename):
-    dict_units = dict_all_units | dict_storage  # Needs Python 3.9.x   but it's so elegant :-)
+    dict_units = dict_all_units | dict_power_storage  # Needs Python 3.9.x   but it's so elegant :-)
     return import_units(filename,"EinheitStromSpeicher","power_units_storage",dict_units)
 
 ###########################################################################################################
@@ -313,9 +333,50 @@ def truncate_units_consumer():
 
 
 def import_units_consumer(filename):
-    dict_units = dict_all_units | dict_consumer  # Needs Python 3.9.x   but it's so elegant :-)
+    dict_units = dict_all_units | dict_power_consumer  # Needs Python 3.9.x   but it's so elegant :-)
     return import_units(filename,"EinheitStromVerbraucher","power_units_consumer",dict_units)
 
+###########################################################################################################
+#  Gas generator units
+###########################################################################################################
+def truncate_units_gas_generator():
+    sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
+    sql_string = "TRUNCATE TABLE gas_units_generator"
+    sqlCursor = sqlConnection.cursor()
+    sqlCursor.execute(sql_string)
+
+
+def import_units_gas_generator(filename):
+    dict_units = dict_all_units | dict_gas_generator # Needs Python 3.9.x   but it's so elegant :-)
+    return import_units(filename,"EinheitGasErzeuger","gas_units_generator",dict_units)
+
+###########################################################################################################
+#  Gas Storage units
+###########################################################################################################
+def truncate_units_gas_storage():
+    sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
+    sql_string = "TRUNCATE TABLE gas_units_storage"
+    sqlCursor = sqlConnection.cursor()
+    sqlCursor.execute(sql_string)
+
+
+def import_units_gas_storage(filename):
+    dict_units = dict_all_units | dict_gas_storage  # Needs Python 3.9.x   but it's so elegant :-)
+    return import_units(filename,"EinheitGasSpeicher","gas_units_storage",dict_units)
+
+###########################################################################################################
+#  Gas consumer units
+###########################################################################################################
+def truncate_units_gas_consumer():
+    sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
+    sql_string = "TRUNCATE TABLE gas_units_consumer"
+    sqlCursor = sqlConnection.cursor()
+    sqlCursor.execute(sql_string)
+
+
+def import_units_gas_consumer(filename):
+    dict_units = dict_all_units | dict_gas_consumer  # Needs Python 3.9.x   but it's so elegant :-)
+    return import_units(filename,"EinheitGasverbraucher","gas_units_consumer",dict_units)
 
 
 ###########################################################################################################
