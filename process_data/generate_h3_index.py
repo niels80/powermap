@@ -3,8 +3,6 @@ import pytz
 import os
 from common import helperfunctions as helper
 
-print("Number of processors: ", mp.cpu_count())
-
 BATCHSIZE = 5000;
 RESOLUTION = 7;
 
