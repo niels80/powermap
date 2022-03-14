@@ -1,0 +1,56 @@
+#container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: #fff;  
+  display: block;
+}
+
+#powermap {
+  flex-grow: 1;
+  height:60vh;
+}
+
+#powertablediv {
+  height:40vh;
+  visibility: hidden;
+}
+
+#control-panel {
+  font-family: Helvetica, Arial, sans-serif;
+  background: #fff;
+  padding: 20px;
+  z-index: 1;
+  line-height: 1.6;
+  overflow-y: auto;
+}
+#control-panel div {
+  padding-left: 10px;
+}
+
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 1%;
+  height: 30px;
+  background-color: #04AA6D;
+}
+
+.input {
+  display: flex;
+}
+.input label {
+  flex-grow: 1;
+}
+.input input {
+  width: 140px;
+  margin: 0 8px;
+}
+.input span {
+  width: 40px;
+}
