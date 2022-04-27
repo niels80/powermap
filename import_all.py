@@ -5,7 +5,7 @@ from import_functions import import_market_player
 from import_functions import import_market_roles
 from import_functions import import_units
 
-BASE_DIR = 'E:\Temp\markststammdatenregister'
+BASE_DIR = os.environ.get('PATH_MARKTSTAMMDATENREGISTER')
 
 catalog.import_categories(BASE_DIR+'\Katalogkategorien.xml')
 catalog.import_catalog(BASE_DIR+'\Katalogwerte.xml')

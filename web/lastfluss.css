@@ -10,12 +10,13 @@
 
 #powermap {
   flex-grow: 1;
-  height:60vh;
+  height:70vh;
 }
 
 #powertablediv {
-  height:40vh;
+  height:310px;
   visibility: hidden;
+  
 }
 
 #control-panel {

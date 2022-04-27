@@ -1,5 +1,6 @@
 import pytz
 import os
+import io
 import simplejson as json
 from common import helperfunctions as helper
 from pathlib import Path
@@ -38,6 +39,7 @@ data_tables = {
 
 dict_global_statistics = {}
 for t in data_tables:
+    dict_table_statistics = {}
     print("Processing "+str(t))
     sqlstr = "SELECT id_H3, COUNT(id_H3) nr, "
     n = 0
@@ -51,23 +53,31 @@ for t in data_tables:
     sqlCursor.execute(sqlstr)
     results = sqlCursor.fetchall()
     sqlCursor.commit()
-
     colnames = [column[0] for column in sqlCursor.description]
     for r in results:
         if r.id_H3 not in dict_global_statistics:
             dict_global_statistics[r.id_H3] = {}
         dict_global_statistics[r.id_H3][t] = dict(zip(colnames,r))
+        dict_table_statistics[r.id_H3] = dict(zip(colnames, r))
+    dat2 = []
+    # Write table statistics
+    for d in dict_table_statistics:
+        dat2.append({"id_H3": d} | dict_table_statistics[d])
+    with io.open(OUTPATH + "/statistics_t_"+t+".json", 'w',encoding='utf8') as outfile:
+        outfile.write(json.dumps(dat2, use_decimal=True, ensure_ascii=False))
 
-with open(OUTPATH+"/statistics.json", 'w') as outfile:
-    outfile.write(json.dumps(dict_global_statistics, use_decimal=True))
+#Write total statistics
+# Hash : {idH3 : {Data}, idH3 : {Data}, .... }
+with io.open(OUTPATH+"/statistics.json", 'w',encoding='utf8') as outfile:
+    outfile.write(json.dumps(dict_global_statistics, use_decimal=True, ensure_ascii=False))
 
+# Array: [ {idH3 : xxxx, .... }, { }, ....  ]
 dat2 = []
 for d in dict_global_statistics:
     dat2.append({ "id_H3" : d } | dict_global_statistics[d])
-with open(OUTPATH+"/statistics2.json", 'w') as outfile:
-    outfile.write(json.dumps(dat2, use_decimal=True))
+with io.open(OUTPATH+"/statistics2.json", 'w',encoding='utf8') as outfile:
+    outfile.write(json.dumps(dat2, use_decimal=True, ensure_ascii=False))
 
-exit()
 
 #
 #  All data per H3 hexagon
@@ -93,10 +103,9 @@ sqlstr = "SELECT id_H3 FROM ("+sql_all_id3+") AS all_H3s GROUP BY id_H3 ORDER BY
 sqlCursor.execute(sqlstr)
 results = sqlCursor.fetchall()
 
+
+
 # Write all data per H3 hexagon
-
-
-
 n2 = 0
 for r in results:
     n2 += 1
@@ -119,6 +128,6 @@ for r in results:
 
     folder = OUTPATH + "/" + str(int(idH3, 16) % NR_FOLDERS)
     Path(folder).mkdir(parents=True, exist_ok=True)
-    with open(folder+"/h3_"+idH3+".json", 'w') as outfile:
-        outfile.write(json.dumps(h3data, use_decimal=True, default=str))
+    with io.open(folder+"/h3_"+idH3+".json", 'w',encoding='utf8') as outfile:
+        outfile.write(json.dumps(h3data, use_decimal=True, default=str, ensure_ascii=False))
     outfile.close()
