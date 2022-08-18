@@ -123,7 +123,7 @@ def import_market_player(filename):
         #print("Elements: "+str(nr_elements)+"\n")
         if (sqldata['id_mastr'] != None):
             placeholder = ", ".join(["?"] * len(sqldata))
-            stmt = "insert into `{table}` ({columns}) values ({values});".format(table="market_player",
+            stmt = "insert ignore into `{table}` ({columns}) values ({values});".format(table="market_player",
                                                                                  columns=",".join(sqldata.keys()),
                                                                                  values=placeholder)
             sqlCursor.execute(stmt, list(sqldata.values()))

@@ -64,7 +64,7 @@ def import_market_roles(filename):
             if (sqldata['id_mastr_role'] != None):
                 #print("ID Mastr Role: "+sqldata['id_mastr_role'])
                 placeholder = ", ".join(["?"] * len(sqldata))
-                stmt = "insert into `{table}` ({columns}) values ({values});".format(table="market_roles",
+                stmt = "insert ignore into `{table}` ({columns}) values ({values});".format(table="market_roles",
                                                                                      columns=",".join(sqldata.keys()),
                                                                                      values=placeholder)
                 sqlCursor.execute(stmt, list(sqldata.values()))

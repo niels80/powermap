@@ -410,7 +410,7 @@ def import_units(filename, tagname,  table, dictionary):
         # print("Elements: "+str(nr_elements)+"\n")
         if (sqldata['id_mastr_unit'] != None):
             placeholder = ", ".join(["?"] * len(sqldata))
-            stmt = "insert into `{table}` ({columns}) values ({values});".format(table=table,
+            stmt = "insert ignore into `{table}` ({columns}) values ({values});".format(table=table,
                                                                                  columns=",".join(sqldata.keys()),
                                                                                  values=placeholder)
             sqlCursor.execute(stmt, list(sqldata.values()))
