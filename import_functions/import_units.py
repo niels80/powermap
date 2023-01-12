@@ -72,7 +72,8 @@ dict_all_units = {
     "NameKraftwerksblock" : "name_power_unit",
     "Technologie" : "id_technology",
     "EegMaStRNummer": "id_mastr_eeg",
-    "KwkMaStRNummer": "id_mastr_kwk"
+    "KwkMaStRNummer": "id_mastr_kwk",
+    "Buergerenergie": "is_buergerenergie"
 }
 
 dict_power_solar = {
@@ -133,6 +134,7 @@ dict_power_wind = {
     "AuflagenAbschaltungSonstige" :  "has_restrictions_other",
     "Wassertiefe" :  "water_depth" ,
     "Kuestenentfernung" :  "distance_to_shore" ,
+    "Nachtkennzeichnung" : "has_night_marking"
 
 }
 
