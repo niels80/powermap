@@ -100,6 +100,7 @@ dict_power_thermal = {
     "DatumBeginnVorlaeufigenOderEndgueltigenStilllegung" : "date_end_operation",
     "SteigerungNettonennleistungKombibetrieb" : "power_added_combi_operation",
     "AnlageIstImKombibetrieb" : "is_in_combi_operation",
+    "AusschliesslicheVerwendungImKombibetrieb" : "is_only_in_combi_operation",
     "MastrNummernKombibetrieb" : "id_mastr_combi_operation",
     "NetzreserveAbDatum" : "date_grid_reserve_start",
     "SicherheitsbereitschaftAbDatum" : "date_emergency_reserve_start",
