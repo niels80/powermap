@@ -9,3 +9,7 @@ Plus some scripts to generate Uber H3 Visualizations
 Work in progress... 
 
 Example: https://100prozent-erneuerbare.de/powermap/
+
+Kepler Visualization:
+(Data: https://100prozent-erneuerbare.de/kepler.json)
+![grafik](https://github.com/niels80/powermap/assets/32801883/b41b99d4-e94c-400f-8f85-9ec8232799fe)
