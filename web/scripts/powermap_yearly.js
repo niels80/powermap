@@ -25,6 +25,8 @@ var scale_bars = 1;
 var year_from  = 1990;
 var year_to    = 2030;
 var include_null = 0;
+var show_power   = 1;
+var scaling_base = 1000;
 
 function updateCheckState() {
 	for(var t in datatables) {
@@ -44,9 +46,12 @@ function updateCheckState() {
 	if ($('#check-gas-generation').is(':checked')) { checkState["gas_units_generator"] = true }
 	
 	include_null = $('#check-include-null').is(':checked');
+	show_power   = $('#radio_show_power').is(':checked');
 	scale_bars = document.getElementById("scale_slide").value;
 	year_from  = document.getElementById("year_from").value;
 	year_to  = document.getElementById("year_to").value;
+	
+	if (show_power) { scaling_base = 1000; } else {scaling_base = 10;}
 }
 
 async function initialize() {
@@ -92,7 +97,8 @@ async function initialize() {
 				{
 					Object.keys(d[year]).forEach(function (t) { 	
 					  if (checkState[t]) {
-						  p = p + d[year][t].P;
+						  if (show_power) {p = p + d[year][t].P;} else 
+							  { p = p+ d[year][t].nr; }
 					  }
 					});
 				}
@@ -102,7 +108,8 @@ async function initialize() {
 	
 	function getColor(d) {
 		p = getPower(d);
-		return(color_scale(p/10000).rgb());
+		if (show_power) return(color_scale(p/10000).rgb());
+		return(color_scale(p/100).rgb());
 	}
 	
 	function getTooltip(d) {
@@ -128,8 +135,14 @@ async function initialize() {
 					  if (checkState[t]) {
 						 row = row + '<td class="text-right">';
 						 if (t in d.data[year]) {
-							 row = row + Math.round(P_total+d.data[year][t].P/10)/100+ " MW";
-							 P_total = P_total+d.data[year][t].P ;
+							
+							 if (show_power) {
+								  row = row + Math.round(P_total+d.data[year][t].P/10)/100+ " MW";
+								 P_total = P_total+d.data[year][t].P ; 
+							} else { 
+								 row = row + Math.round(P_total+d.data[year][t].nr);
+								 P_total = P_total+d.data[year][t].nr ; 
+							}
 						 }
 						 row = row + '</td>';
 					  }
@@ -204,7 +217,7 @@ async function initialize() {
 					elevationScale: 10,
 					getHexagon: d => d.idH3,
 					getFillColor: d => (getColor(d.data)),
-					getElevation: d=> (getPower(d.data)*scale_bars/1000),
+					getElevation: d=> (getPower(d.data)*scale_bars/scaling_base),
 					updateTriggers: {
 					  getElevation: updateTrigger,
 					  getFillColor: updateTrigger
