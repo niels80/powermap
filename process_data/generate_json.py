@@ -130,4 +130,4 @@ for r in results:
     Path(folder).mkdir(parents=True, exist_ok=True)
     with io.open(folder+"/h3_"+idH3+".json", 'w',encoding='utf8') as outfile:
         outfile.write(json.dumps(h3data, use_decimal=True, default=str, ensure_ascii=False))
-    outfile.close()
+        outfile.close()

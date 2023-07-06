@@ -70,9 +70,11 @@ with open(OUTPATH+"/kepler_data.csv", 'w', newline='', encoding='UTF8') as f:
     for id_H3 in all_data:
         for year_c in all_data[id_H3]:
             for unit_type in all_data[id_H3][year_c]:
-                writer.writerow([id_H3,year_c,unit_type,all_data[id_H3][year_c][unit_type]['nr'],all_data[id_H3][year_c][unit_type]['P']])
+                if(year_c != None):
+                    writer.writerow([id_H3,str(year_c)+"-06-01 00:00",unit_type,all_data[id_H3][year_c][unit_type]['nr'],all_data[id_H3][year_c][unit_type]['P']])
 
-
-
+with open(OUTPATH + "/statistics_yearly.json", 'w', newline='', encoding='UTF8') as outfile:
+        outfile.write(json.dumps(all_data, use_decimal=True, default=str, ensure_ascii=False))
+        outfile.close()
 
 

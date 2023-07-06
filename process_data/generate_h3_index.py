@@ -59,7 +59,7 @@ def update_h3(tablename):
             nr += 1
             nrSQL += 1
 
-            id_H3 = h3.geo_to_h3(float(lat), float(lon), RESOLUTION)
+            id_H3 = h3.latlng_to_cell(float(lat), float(lon), RESOLUTION)
             data_update.append([id_H3, id_mastr])
 
         if nrSQL > 0:

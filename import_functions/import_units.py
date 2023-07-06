@@ -309,7 +309,7 @@ def truncate_units_geothermal_other():
 
 def import_units_geothermal_other(filename):
     dict_units = dict_all_units | dict_power_geothermal_other  # Needs Python 3.9.x   but it's so elegant :-)
-    return import_units(filename,"EinheitGeoSolarthermieGrubenKlaerschlammDruckentspannung","power_units_geo_soltherm_other",dict_units)
+    return import_units(filename,"EinheitGeothermieGrubengasDruckentspannung","power_units_geo_soltherm_other",dict_units)
 
 ###########################################################################################################
 #  Power Storage units

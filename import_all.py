@@ -24,7 +24,6 @@ for i in range(100):
         import_market_player.import_market_player(file)
 
 
-
 #########################################################
 # GAS
 #########################################################
@@ -63,7 +62,7 @@ for i in range(100):
 
 # Units Geothermal and others
 import_units.truncate_units_geothermal_other()
-import_units.import_units_geothermal_other(BASE_DIR+'\EinheitenGeoSolarthermieGrubenKlaerschlammDruckentspannung.xml')
+import_units.import_units_geothermal_other(BASE_DIR+'\EinheitenGeothermieGrubengasDruckentspannung.xml')
 
 
 # Units Hydro
