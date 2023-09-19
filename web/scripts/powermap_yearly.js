@@ -63,7 +63,7 @@ async function initialize() {
 	
 	document.getElementById("myBar").style.width = Math.round(n/10*100) + "%";
 	n = n+1;
-	var url = URL_dataEEG+'statistics_yearly.json?'+Math.random();
+	var url = URL_dataEEG+'statistics_h3_yearly.json?'+Math.random();
 	console.log("Fetching "+url)
 	var response = await fetch(url).then(response => response.json()).then(
 		data => {

@@ -3,23 +3,23 @@ import pytz
 import os
 from common import helperfunctions as helper
 
-BATCHSIZE = 5000;
-RESOLUTION = 7;
-
-TZONE = pytz.timezone(str(os.environ["TIMEZONE"]))
-
-sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
-sqlCursor = sqlConnection.cursor()
-
-sqlConnection2 = helper.getSqlConnection(os.environ["POWERMAP_DB"])
-sqlCursor2 = sqlConnection2.cursor()
-
-nr = 0;
-nrSQL = 0;
+BATCHSIZE = 5000
+RESOLUTION = 7
 
 
 ######################################
 def update_h3(tablename):
+
+    TZONE = pytz.timezone(str(os.environ["TIMEZONE"]))
+
+    sqlConnection = helper.getSqlConnection(os.environ["POWERMAP_DB"])
+    sqlCursor = sqlConnection.cursor()
+
+    sqlConnection2 = helper.getSqlConnection(os.environ["POWERMAP_DB"])
+    sqlCursor2 = sqlConnection2.cursor()
+
+    nr = 0;
+    nrSQL = 0;
 
     print("Updating H3 Indizes for table "+str(tablename))
     sqlCursor.execute('''SELECT                                                       
@@ -69,18 +69,20 @@ def update_h3(tablename):
     print("Final")
 ######################################
 
+def generate_h3():
+    update_h3('gas_units_consumer')
+    update_h3('gas_units_generator')
+    update_h3('gas_units_storage')
+    update_h3('power_units_biomass')
+    update_h3('power_units_consumer')
+    update_h3('power_units_geo_soltherm_other')
+    update_h3('power_units_hydro')
+    update_h3('power_units_nuclear')
+    update_h3('power_units_solar')
+    update_h3('power_units_storage')
+    update_h3('power_units_thermal')
+    update_h3('power_units_wind')
+    exit(0)
 
-update_h3('gas_units_consumer')
-update_h3('gas_units_generator')
-update_h3('gas_units_storage')
-update_h3('power_units_biomass')
-update_h3('power_units_consumer')
-update_h3('power_units_geo_soltherm_other')
-update_h3('power_units_hydro')
-update_h3('power_units_nuclear')
-update_h3('power_units_solar')
-update_h3('power_units_storage')
-update_h3('power_units_thermal')
-update_h3('power_units_wind')
-
-exit(0)
+if __name__ == "__main__":
+    generate_h3()
