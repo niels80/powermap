@@ -84,8 +84,9 @@ dict_market_player = {
     "Gasgrosshaendler" : "is_gas_trader",
     "Stromgrosshaendler" : "is_electricity_trader",
     "BelieferungVonLetztverbrauchernGas" : "is_gas_supplier",
-    "BelieferungHaushaltskundenGas" : "is_gas_supplier_households"
-
+    "BelieferungHaushaltskundenGas" : "is_gas_supplier_households",
+    "WebportalDesNetzbetreibers" : "webportal_grid_operator",
+    "RegisternummerPraefix" : "prefix_register_nr"
 }
 
 
