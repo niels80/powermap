@@ -82,7 +82,6 @@ def generate_h3():
     update_h3('power_units_storage')
     update_h3('power_units_thermal')
     update_h3('power_units_wind')
-    exit(0)
 
 if __name__ == "__main__":
     generate_h3()
