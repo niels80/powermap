@@ -73,7 +73,9 @@ dict_all_units = {
     "Technologie" : "id_technology",
     "EegMaStRNummer": "id_mastr_eeg",
     "KwkMaStRNummer": "id_mastr_kwk",
-    "Buergerenergie": "is_buergerenergie"
+    "Buergerenergie": "is_buergerenergie",
+    "ReserveartNachDemEnWG": "id_reserve_enwg",
+    "DatumDerUeberfuerungInReserve": "date_reserve_enwg"
 }
 
 dict_power_solar = {
