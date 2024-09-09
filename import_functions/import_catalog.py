@@ -53,6 +53,7 @@ def import_catalog(filename):
 
     inserts = []
     for event, element in etree.iterparse(filename, tag="Katalogwert"):
+
         id = None
         category_id = None
         name = None
@@ -64,6 +65,8 @@ def import_catalog(filename):
             if (child.tag == "Wert"):
                 name = child.text
         if (id != None):
+            if (name == None):
+                name="-"
             sqlCursor.execute("INSERT INTO catalog(id,category_id,name_DE) VALUES (?,?,?)", id, category_id, name)
 
     sqlCursor.commit()

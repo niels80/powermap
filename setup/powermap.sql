@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 11. Apr 2024 um 14:47
+-- Erstellungszeit: 08. Sep 2024 um 17:31
 -- Server-Version: 10.4.22-MariaDB
 -- PHP-Version: 8.1.2
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `powermap`
 --
-CREATE DATABASE IF NOT EXISTS `powermap` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `powermap`;
 
 -- --------------------------------------------------------
 
@@ -218,7 +216,7 @@ INSERT INTO `balancing_areas` (`id`, `yeic`, `balancing_area_grid_connection_poi
 (191, '11YV000000009226', 'Freiberger Stromversorgung GmbH', 1000001),
 (192, '11YV00000000971U', NULL, 1000001),
 (193, '11YW-GB-MILLER-V', NULL, 1001572),
-(194, '11YN00007653-01F', 'Netzgebiet Stolzenau', 1001564),
+(194, '11YN00007653-01F', 'Netzgebiet Stolzenau / REB', 1001564),
 (196, '11YR00000003037T', NULL, 1000010),
 (197, '11YW-BAIERSBRONS', NULL, 1001572),
 (199, '11YN10000178-01K', NULL, 1001564),
@@ -274,7 +272,7 @@ INSERT INTO `balancing_areas` (`id`, `yeic`, `balancing_area_grid_connection_poi
 (253, '11YR00000002922B', 'Stromnetz', 1000010),
 (254, '11YR000000027279', NULL, 1000010),
 (255, '11YR00000004211Y', NULL, 1000010),
-(256, '11YN10003098-01S', NULL, 1001564),
+(256, '11YN10003098-01S', 'Bilanzierungsgebiet KommEnergie NB', 1001564),
 (257, '11YN10000170-01N', NULL, 1001564),
 (258, '11YN10001738-01V', 'Kreiswerke Main-Kinzig 1', 1001564),
 (259, '11YR00000002504T', 'BG Leitungspartner', 1000010),
@@ -304,7 +302,7 @@ INSERT INTO `balancing_areas` (`id`, `yeic`, `balancing_area_grid_connection_poi
 (285, '11YW-HIRSCHBERKK', 'Teilnetz Hirschberg', 1001572),
 (286, '11YW-ENBW-E-REGK', 'Netze BW GmbH (TransnetBW)', 1001572),
 (287, '11YR00000002363L', 'Stammgebiet', 1000010),
-(288, '11YV00000007046U', NULL, 1000001),
+(288, '11YV00000007046U', 'Bilanzierungsgebiet', 1000001),
 (289, '11YR00000004015Y', NULL, 1000010),
 (290, '11YR00000001180Y', 'Netz: Stammgebiet', 1000010),
 (291, '11YR00000001708I', 'Netz: SWDN Universitätsstrasse 1', 1000010),
@@ -356,7 +354,7 @@ INSERT INTO `balancing_areas` (`id`, `yeic`, `balancing_area_grid_connection_poi
 (340, '11YW-TAUBERFRAND', NULL, 1001572),
 (341, '11YW-AALEN-----S', 'Konzessionsgeb. Aalen', 1001572),
 (342, '11YN10001122-01Z', NULL, 1001564),
-(343, '11YR00000004945Q', NULL, 1000010),
+(343, '11YR00000004945Q', 'Ahaus', 1000010),
 (344, '11YN10000141001W', NULL, 1001564),
 (345, '11YW-ALTENSTEI-Y', 'Stadtwerke Altensteig', 1001572),
 (346, '11YN10000410-011', NULL, 1001564),
@@ -749,7 +747,6 @@ INSERT INTO `balancing_areas` (`id`, `yeic`, `balancing_area_grid_connection_poi
 (759, '11YN10001385-017', 'Stromversorgung Greding', 1001564),
 (760, '11YN10001702-015', 'Elektrizitätswerk Wörth a. d. Donau R. Heider & Co. KG', 1001564),
 (761, '11YN10001196-01A', 'Bielefeld', 1001564),
-(762, '11YN10001583-013', '11YN10001583-013', 1001564),
 (763, '11YW-KRAUCHNWIEF', 'Bilanzierungsgebiet Netz GWK', 1001572),
 (764, '11YV000000007509', 'SachsenNetze', 1000001),
 (765, '11YN10001223-01N', 'TenneT', 1001564),
@@ -806,7 +803,7 @@ INSERT INTO `balancing_areas` (`id`, `yeic`, `balancing_area_grid_connection_poi
 (821, '11YV00000000909Z', 'Stadtwerke Rostock Netzgesellschaft mbH Strom', 1000001),
 (822, '11YN10000357-01N', NULL, 1001564),
 (823, '11YN10001405-01B', 'Ismaning', 1001564),
-(824, '11YV000000007525', NULL, 1000001),
+(824, '11YV000000007525', 'Bilanzierungsgebiet Schönebeck', 1000001),
 (825, '11YN10000393-01J', 'Stadtwerke Pappenheim GmbH', 1001564),
 (826, NULL, NULL, 1001564),
 (827, '11YN10000639-014', '11YN10000639-014', 1001564),
@@ -1032,9 +1029,9 @@ INSERT INTO `balancing_areas` (`id`, `yeic`, `balancing_area_grid_connection_poi
 (1094, '11YV10000000951O', 'Stromnetz', 1000001),
 (1095, '11YN10000621-01D', 'Stadtwerke Landau a.d.Isar ', 1001564),
 (1096, '11YN00007649-01S', 'FHG Stromnetz', 1001564),
-(1097, '11YN00007765-01T', 'Piusheim', 1001564),
-(1098, '11YR00000003608C', 'Carlswerk Köln', 1000010);
+(1097, '11YN00007765-01T', 'Piusheim', 1001564);
 INSERT INTO `balancing_areas` (`id`, `yeic`, `balancing_area_grid_connection_point`, `control_area_id`) VALUES
+(1098, '11YR00000003608C', 'Carlswerk Köln', 1000010),
 (1099, '11YR00000004231S', 'Allee Center Essen-Altenessen', 1000010),
 (1100, '11YR00000001770D', 'LOOP5 Shopping Centre GmbH', 1000010),
 (1101, '11YN00007659-20I', 'Weser-Park Bremen', 1001564),
@@ -1131,7 +1128,7 @@ INSERT INTO `balancing_areas` (`id`, `yeic`, `balancing_area_grid_connection_poi
 (1192, '11YN10000806-01N', 'Stammnetz Kreuzwertheim', 1001564),
 (1193, '11YN10001722-01U', 'Gemeindewerke Wildeck', 1001564),
 (1194, '11YR00000004486W', 'Netz: Chemiepark Marl', 1000010),
-(1196, '11YN10003205-108', 'Beuthener Straße 53, 55, 57, 59, 61, 65', 1001564),
+(1196, '11YN-0000-0006-B', 'Beuthener Straße 53, 55, 57, 59, 61, 65', 1001564),
 (1197, '11YN-0000-0003-K', 'Oertelplatz 2, 11, 13, 15 und Hintermeierstraße 51', 1001564),
 (1198, '11YW-FAS-------D', 'Fasanenweg 11 ', 1001572),
 (1199, '11YR00000002039U', '1', 1000010),
@@ -1215,9 +1212,9 @@ INSERT INTO `balancing_areas` (`id`, `yeic`, `balancing_area_grid_connection_poi
 (1279, '11YN-0000-0024-9', 'Stadtwerke Olching Stromnetz GmbH & Co. KG', 1001564),
 (1280, '11YN-0000-0016-7', 'Quartier Bernsteinsee', 1001564),
 (1281, '11YV000000076644', 'Motel One Fleetinsel', 1000001),
-(1282, '11YR00000002982U', 'Netzgebiet Unna', 1000010),
+(1282, '11YR00000002982U', 'Netzgebiet Unna / Münsterland', 1000010),
 (1283, '11YN-0000-0029-V', 'Hannover Göttinger Chaussee', 1001564),
-(1284, '11YN-IK-BUDE-011', 'Buderus Wetzlar ', 1001564),
+(1284, '11YN-IK-BUDE-011', 'Buderus Wetzlar Hessen', 1001564),
 (1285, '11YWDBEN-NB50HZC', NULL, 1001572),
 (1286, '11YN00007587-01L', NULL, 1001564),
 (1287, '11YV00000007587X', NULL, 1000001),
@@ -1293,7 +1290,15 @@ INSERT INTO `balancing_areas` (`id`, `yeic`, `balancing_area_grid_connection_poi
 (1363, '11YN-0000-0028-Y', 'RNI - Reußenköge', 1001564),
 (1364, '11Y0-0000-0779-U', NULL, 1000001),
 (1365, '11YR00000004042V', 'THEN Amprion Rülzheim', 1000010),
-(1366, '11YR00000003749V', 'THEN Amprion Hördt', 1000010);
+(1366, '11YR00000003749V', 'THEN Amprion Hördt', 1000010),
+(1367, '11YR00000002275I', NULL, 1000010),
+(1368, '11YR000000012154', 'Stadtlohn Vreden Südlohn', 1000010),
+(1369, '11YR00000002812I', 'Bilanzierungsgebiet EnBB Hauenstein', 1000010),
+(1370, '11YN-0000-0035-2', 'OER', 1001564),
+(1371, '11YN-0000-0037-X', 'GPN', 1001564),
+(1372, '11YR00000003510T', 'CCN', 1000010),
+(1373, '11YW-VOE-------8', 'VOE', 1001572),
+(1374, '11YW-GETEC-QUA-5', 'GETEC Quartier GmbH in TransNetBW ', 1001572);
 
 -- --------------------------------------------------------
 
@@ -1842,8 +1847,8 @@ CREATE TABLE `power_units_hydro` (
   `id_bnetza_nr` varchar(50) DEFAULT NULL,
   `no_bnetza_nr` tinyint(4) DEFAULT NULL,
   `id_primary_energy` int(11) DEFAULT NULL,
-  `idReserveEnWG` int(11) DEFAULT NULL COMMENT 'ReserveArtNachDemEnWG',
-  `dateReserveEnWG` date DEFAULT NULL COMMENT 'DatumDerUeberfuerungDatumDerUeberfuerungInReserve',
+  `id_reserve_enwg` int(11) DEFAULT NULL COMMENT 'ReserveArtNachDemEnWG',
+  `date_reserve_enwg` date DEFAULT NULL COMMENT 'DatumDerUeberfuerungDatumDerUeberfuerungInReserve',
   `power_brutto` decimal(15,3) DEFAULT NULL,
   `power_netto` decimal(15,3) DEFAULT NULL,
   `is_connected_high_voltage` tinyint(4) DEFAULT NULL,
