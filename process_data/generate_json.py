@@ -120,13 +120,23 @@ def generate_json():
         }
         for t in data_tables:
             h3data["units"][t] = {}
-            sqlstr2 = "SELECT * FROM "+t+" WHERE id_H3='"+idH3+"'"
+            sqlstr2 = "SELECT t_units.*,0 AS 'XXX_SEPARATOR_XXX',t_mp.* FROM "+t+" t_units LEFT JOIN market_player t_mp ON (t_units.id_mastr_operator=t_mp.id_mastr AND t_units.id_mastr_operator IS NOT NULL)  WHERE id_H3='"+idH3+"'"
             sqlCursor2.execute(sqlstr2)
             results2 = sqlCursor2.fetchall()
             colnames = [column[0] for column in sqlCursor2.description]
+            n = colnames.index('XXX_SEPARATOR_XXX')
             for row in results2:
-                dat = dict(zip(colnames,row))
-                h3data["units"][t][dat["id_mastr_unit"]] = dat
+
+                dat_unit = dict(zip(colnames[:n], row[:n]))
+                dat_unit = {key: value for key, value in dat_unit.items() if value is not None} # Null-Werte löschen
+
+                dat_operator = dict(zip(colnames[n + 1:], row[n + 1:]))
+                dat_operator = {key: value for key, value in dat_operator.items() if value is not None} # Null-Werte löschen
+
+                h3data["units"][t][dat_unit["id_mastr_unit"]] = {
+                    'unit': dat_unit,
+                    'operator': dat_operator
+                }
 
         folder = OUTPATH + "/" + str(int(idH3, 16) % NR_FOLDERS)
         Path(folder).mkdir(parents=True, exist_ok=True)

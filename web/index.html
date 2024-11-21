@@ -7,22 +7,22 @@
 
 
 
-<script type="text/javascript" src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="scripts/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="scripts/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="scripts/jquery.dataTables.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/bootstrap@4.1.1/dist/css/bootstrap.min.css">
-<script src="https://unpkg.com/h3-js@^3.0.0"></script>
-<script src="https://unpkg.com/deck.gl@^8.0.0/dist.min.js"></script>
+<link rel="stylesheet" href="scripts/bootstrap.min.css">
+<script src="scripts/h3-js.js"></script>
+<script src="scripts/deck.gl.dist.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js" integrity="sha512-yocoLferfPbcwpCMr8v/B0AB4SWpJlouBwgE0D3ZHaiP1nuu5djZclFEIj9znuqghaZ3tdCMRrreLoM8km+jIQ==" crossorigin="anonymous"></script>
+<script src="scripts/chroma.min.js" ></script>
 
-<script src="./scripts/powermap_yearly.js"></script>
-<link href='./lastfluss.css' rel='stylesheet' />
+<script src="scripts/powermap_yearly.js"></script>
+<link href='lastfluss.css' rel='stylesheet' />
 
 <!-- optional if mapbox base map is needed -->
-<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+<script src='scripts/mapbox-gl.js'></script>
+<link href='scripts/mapbox-gl.css' rel='stylesheet' />
 
    <style>
         .vertical-scrollable {
@@ -67,11 +67,11 @@
 		 <div class="card-body">
 			<h5 class="card-title">Electricity Generation</h5>
 			<div class="form-check">
-				<input type="checkbox" class="form-check-input update_on_change" id="check-gen-solar" >
+				<input type="checkbox" class="form-check-input update_on_change" id="check-gen-solar" checked="checked" >
 				<label class="form-check-label" for="check-gen-solar">Solar / Photovoltaic</label>
 			</div>
 			<div class="form-check">
-				<input type="checkbox" class="form-check-input update_on_change" id="check-gen-wind" checked="checked">
+				<input type="checkbox" class="form-check-input update_on_change" id="check-gen-wind" >
 				<label class="form-check-label" for="check-gen-wind">Wind</label>
 			</div>
 			<div class="form-check">
@@ -134,16 +134,16 @@
 		 <div class="card-body">
 			<div class="card-title h5">Year commissioning</div>
 			<div class="form-check">
-				<output id="year_from_output" class="h6 pb-2">1990</output>
 				<input type="range" class="form-range update_on_change" id="year_from" min="1990" max="2030" value="1990" />
-				<output id="year_to_output" class="h6 pb-2">2030</output>
+				<output id="year_from_output" class="h6 pb-2">1990</output><br />
 				<input type="range" class="form-range update_on_change" id="year_to" min="1990" max="2030" value="2030" />
+				<output id="year_to_output" class="h6 pb-2">2030</output>
 				
 			</div>
 			
 			<div class="form-check pb-2">
 				<label class="form-check-label h6" for="check-include-null">Include units without commissioning date</label>
-				<input type="checkbox" class="form-check-input update_on_change" id="check-include-null" />
+				<input type="checkbox" class="form-check-input update_on_change h6 pb-2" id="check-include-null" />
 			</div>
 		</div>
 		</div>
@@ -165,8 +165,13 @@
 			
 			<div class="form-check">
 				<label for="scale_slide" class="form-label">Scale</label>
-				<input type="range" class="form-range update_on_change pb-2" id="scale_slide" min="1" max="200" value="50"/>
+				<input type="range" class="form-range update_on_change pb-2" id="scale_slide" min="1" max="500" value="50" />
 			</div>
+		
+			<div class="form-check">
+				<label for="h3_resolution_slide" class="form-label">H3 Zoom</label>
+				<input type="range" class="form-range update_on_change pb-2" id="h3_resolution_slide" min="1" max="6" value="6" />
+			</div>		
 		
 		</div>
 		</div>
@@ -175,7 +180,7 @@
 		<div class="card-body pb-5">
 			<div class="card-title h5">Info</div>
 			<h6><a href="https://100prozent-erneuerbare.de/">Back</a></h6>
-			<h6>Data version: 06.07.2023</h6>
+			<h6>Data version: 15.11.2024</h6>
 			<h6><a href="https://www.marktstammdatenregister.de">Marktstammdatenregister</a></h6>
 			<h6><a href="https://github.com/niels80/powermap">Sourcecode</a></h6>
 			

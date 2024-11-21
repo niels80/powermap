@@ -5,6 +5,8 @@ const NR_FOLDERS  = 50;
 
 var color_scale = chroma.scale(['white', 'green', 'yellow', 'red']);
 
+
+
 var datatables = {
     "power_units_wind"   : "Power Wind Units",
 	"power_units_solar" : "Power Photovoltaics",
@@ -19,6 +21,10 @@ var datatables = {
     "gas_units_generator" : "Gas generators",
     "gas_units_storage" : "Gas storage"
 }
+
+var catalog = {};
+var detailsTable;
+var dataTable;
 
 var checkState = {};
 var scale_bars = 1;
@@ -74,60 +80,80 @@ function loadUnit(idMastr) {
 }
 
 
+const detailsBox = document.getElementById('details-box');
+const closeButton = detailsBox.querySelector('.close-btn');
+const tableBody = document.getElementById('data-table').querySelector('tbody');
+const detailsTableBody = document.getElementById('details-table').querySelector('tbody');
+
+
+
+function populateTable(data) {
+	detailsTable.clear();
+	dataTable.clear();
+	for (const t in datatables) {
+		if (!checkState[t]) continue;
+		if (t in data.units) {
+			const units = Object.values(data.units[t]); 
+			units.forEach(unit => {
+				var newRow = dataTable.row.add( [ datatables[t],
+									unit['unit']['name'],
+									unit['unit']['power_netto'],
+									(unit['unit']['zipcode'] || ''),
+									(unit['unit']['street'] || ''),
+									(unit['operator']['company_name'] || '')
+								   ]).node();
+				$(newRow).on('click', function() {showDetails(unit)});
+			});
+		}
+	}
+	dataTable.draw();
+	detailsTable.draw();
+}
+
+function showDetails(unit) {
+            detailsTable.clear();
+			let unitData = unit.unit;
+			let operatorData = unit.operator;
+			
+            for (const key in unitData) {
+                
+				let value = unitData[key];
+				if (/^id_/.test(key) && value in catalog) {
+						value = value + ' ('+catalog[value].entry.name_DE+' / '+catalog[value].category.name_DE+')';
+				}
+				if (value != null) {
+					detailsTable.row.add(['Unit',key,value]);
+				}
+            }
+			
+			for (const key in operatorData) {
+                let value = operatorData[key];
+				if (/^id_/.test(key) && value in catalog) {
+						value = value + ' ('+catalog[value].entry.name_DE+' / '+catalog[value].category.name_DE+')';
+				}
+				if (value != null) {
+					detailsTable.row.add(['Operator',key,value]);
+				}
+            }
+			
+			detailsTable.draw();
+			
+}
+
+closeButton.addEventListener('click', () => {
+	detailsBox.style.display = 'none';
+});
+
 function updateTable(idH3) {
 	console.log(idH3);
 	var folder = String(BigInt('0x' + idH3) % BigInt(NR_FOLDERS))
 	var url = URL_dataEEG+folder+'/h3_'+String(idH3)+'.json?'+Math.random();
 	console.log("Fetching "+url)
 				
-	var response = fetch(url).then(response => response.json()).then(
-			data => {
-				var dat = [];
-				for (var t in datatables) {
-					if (checkState[t]) {
-						for(var unit in data["units"][t]) {
-							uD = data["units"][t][unit];
-							var value = "/";
-							if 		  (uD.hasOwnProperty("power_netto")) { value = Math.round(uD.power_netto,2); }
-							else if   (uD.hasOwnProperty("max_inject_power")) { value = Math.round(uD.max_inject_power,2); }
-							else if   (uD.hasOwnProperty("max_withdrawal_power")) { value = Math.round(uD.max_withdrawal_power,2); }
-							else if   (uD.hasOwnProperty("controllable_load")) { value = Math.round(uD.controllable_load,2); }
-							 	 
-							dat.push([   //"<a href=\"javascript:loadUnit('"+uD.id_mastr_unit+"')\">"+uD.id_mastr_unit+"</a>",
-									  uD.id_mastr_unit,
-									  datatables[t],
-									  uD.date_commissioning,
-									  uD.name,
-									  uD.street+" "+uD.street_nr,
-									  uD.zipcode,
-									  uD.city,
-									  uD.region,
-									  value
-									 ]);
-						}
-					}
-				}
-				
-				$('#powertable').DataTable( {
-					"destroy": true,
-					 "paging": false,
-					"scrollY": "300px",
-					data: dat,
-					columns: [
-							{ title: "ID" },
-							{ title: "Type" },
-							{ title: "Commissioned" },
-							{ title: "Name" },
-							{ title: "Street" },
-							{ title: "Zipcode" },
-							{ title: "City" },
-							{ title: "Region" },
-							{ title: "Power [kW]" }
-					]
-				} );
-				document.getElementById("powertablediv").style.visibility = "visible";
-			}
-	);
+	var response = fetch(url).then(response => response.json()).then(json => {
+		 populateTable(json);
+		 detailsBox.style.display = 'block';
+	});
 
 }
 
@@ -137,6 +163,18 @@ async function initialize() {
   
 
 	var dataStatistics = {};
+	
+	dataTable = new DataTable('#data-table',{"paging": false, "order": []});
+	detailsTable = new DataTable('#details-table',{"paging": false, "order": []});
+	
+	try {
+		const response = await fetch(URL_dataEEG+'/catalog.json');
+		catalog = await response.json();
+	} catch (error) {
+		console.error('Fehler beim Herunterladen der Katalog JSON-Datei:', error);
+		alert('Fehler beim Herunterladen der Katalog-Datei.');
+	}
+	
 	
     var n = 0;
 	for(var t in datatables) {
@@ -245,9 +283,9 @@ async function initialize() {
 		container: 'powermap',
 		initialViewState: {
 		  longitude: 10,
-		  latitude: 50,
-		  zoom: 6,
-		  pitch: 60,
+		  latitude: 51,
+		  zoom: 5.7,
+		  pitch: 40,
 		  minZoom: 2,
 		  maxZoom: 16
 		},

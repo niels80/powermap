@@ -27,6 +27,7 @@ var year_to    = 2030;
 var include_null = 0;
 var show_power   = 1;
 var scaling_base = 1000;
+var h3_resolution= 6;
 
 function updateCheckState() {
 	for(var t in datatables) {
@@ -48,10 +49,11 @@ function updateCheckState() {
 	include_null = $('#check-include-null').is(':checked');
 	show_power   = $('#radio_show_power').is(':checked');
 	scale_bars = document.getElementById("scale_slide").value;
+	h3_resolution    = document.getElementById("h3_resolution_slide").value;
 	year_from  = document.getElementById("year_from").value;
 	year_to  = document.getElementById("year_to").value;
 	
-	if (show_power) { scaling_base = 1000; } else {scaling_base = 10;}
+	if (show_power) { scaling_base = 250; } else {scaling_base = 1;}
 }
 
 async function initialize() {
@@ -107,7 +109,7 @@ async function initialize() {
 	}
 	
 	function getColor(d) {
-		p = getPower(d);
+		p = getPower(d)/(8^(6-h3_resolution));
 		if (show_power) return(color_scale(p/10000).rgb());
 		return(color_scale(p/100).rgb());
 	}
@@ -180,9 +182,9 @@ async function initialize() {
 		container: 'powermap',
 		initialViewState: {
 		  longitude: 10,
-		  latitude: 50,
+		  latitude: 48,
 		  zoom: 6,
-		  pitch: 60,
+		  pitch: 45,
 		  minZoom: 2,
 		  maxZoom: 16
 		},
@@ -202,13 +204,61 @@ async function initialize() {
 		]
 	});
 
+	function data_merge(base_data,new_data)  {
+			
+		Object.keys(new_data).forEach(function (year) { 
+			if (year in base_data) {
+				Object.keys(new_data[year]).forEach(function (t) { 
+					if (t in base_data[year]) {
+						base_data[year][t].P += new_data[year][t].P;
+						base_data[year][t].nr += new_data[year][t].nr;
+					} else {
+						base_data[year][t] = JSON.parse(JSON.stringify(new_data[year][t]));	
+					}
+				});
+			}
+			else {
+				base_data[year] = JSON.parse(JSON.stringify(new_data[year]));	
+			}
+		});
+		return (base_data);
+	}
+
+	function getData(data) {
+		newdata = {}
+		if (h3_resolution == 6) {
+			return (data);
+		}
+		data.forEach(function (d) {
+			h3index = h3.h3ToParent(d.idH3,h3_resolution);
+			if (h3index in newdata) { 
+				newdata[h3index] = data_merge(newdata[h3index],d.data); 
+			}
+			else { 
+				newdata[h3index] = JSON.parse(JSON.stringify(d.data)); 
+			}
+		});
+			
+		result = [];
+		Object.keys(newdata).forEach(function (h3_index) {
+			result.push({
+				idH3 : h3_index, 
+				data : newdata[h3_index]
+			})
+		}); 
+		
+		return(result);
+	}
+
+	
+	
 	
 	var updateTrigger=0;
 	
 	function render() {
 		const layer = new deck.H3HexagonLayer({
 					id: 'h3-hexagon-layer',
-					data: dataStatisticsArray,
+					data: getData(dataStatisticsArray),
 					pickable: true,
 					wireframe: false,
 					filled: true,
@@ -217,7 +267,7 @@ async function initialize() {
 					elevationScale: 10,
 					getHexagon: d => d.idH3,
 					getFillColor: d => (getColor(d.data)),
-					getElevation: d=> (getPower(d.data)*scale_bars/scaling_base),
+					getElevation: d=> (getPower(d.data)*scale_bars/scaling_base/(8^(6-h3_resolution))),
 					updateTriggers: {
 					  getElevation: updateTrigger,
 					  getFillColor: updateTrigger
