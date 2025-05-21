@@ -92,7 +92,9 @@ dict_power_solar = {
     "InAnspruchGenommeneFlaeche" : "area_used",
     "ArtDerFlaecheIds" : "id_area_type",
     "InAnspruchGenommeneAckerflaeche" : "area_used_agriculture",
-    "Nutzungsbereich" : "id_usage_of_location"
+    "Nutzungsbereich" : "id_usage_of_location",
+    "ArtDerSolaranlage" : "id_pv_type",
+    "SpeicherAmGleichenOrt" : "has_storage_on_site"
 }
 
 dict_power_thermal = {
@@ -137,7 +139,8 @@ dict_power_wind = {
     "AuflagenAbschaltungSonstige" :  "has_restrictions_other",
     "Wassertiefe" :  "water_depth" ,
     "Kuestenentfernung" :  "distance_to_shore" ,
-    "Nachtkennzeichnung" : "has_night_marking"
+    "Nachtkennzeichnung" : "has_night_marking",
+    "WindAnLandOderAufSee" : "id_onshore_offshore"
 
 }
 
@@ -176,7 +179,8 @@ dict_power_storage = {
     "NettonennleistungDeutschland" :  "power_netto_max_germany",
     "ZugeordnenteWirkleistungWechselrichter" : "power_converter",
     "SpeMastrNummer" : "id_mastr_storage",
-    "EegAnlagentyp"  :  "id_eeg_type"
+    "EegAnlagentyp"  :  "id_eeg_type",
+    "GemeinsamRegistrierteSolareinheitMastrNummer" : "id_mastr_solar_common"
 }
 
 dict_power_consumer = {
